@@ -6,7 +6,7 @@ import {
   MenuItem,
   withStyles,
 } from '@material-ui/core'
-import { useItemSelect } from '../../hooks/use-item-select'
+import { usePlaceSelect } from '../../hooks/use-place-select'
 import styles from './styles'
 import { placesFetchAction } from '../../redux/reducers/places/actions'
 import { PlacesStateType } from '../../redux/reducers/places'
@@ -25,13 +25,12 @@ const Component = ({ classes, places, placesFetch }: IProps) => {
   React.useEffect(() => {
     placesFetch()
   }, [placesFetch])
-  const defaultPlace = places.findIndex(p => p === 'Amsterdam')
-  const [selectedPlace, handleSelectPlace] = useItemSelect()
+  const [selectedPlace, handleSelectPlace] = usePlaceSelect()
   return (
     <FormControl className={classes.root}>
       <InputLabel htmlFor="places-select">City</InputLabel>
       <Select
-        value={selectedPlace === -1 ? defaultPlace : selectedPlace}
+        value={selectedPlace}
         onChange={handleSelectPlace}
         fullWidth={true}
         inputProps={{
@@ -39,8 +38,8 @@ const Component = ({ classes, places, placesFetch }: IProps) => {
           id: 'places-select',
         }}
       >
-        {places.map((place: string, index: number) => (
-          <MenuItem key={index} value={index}>
+        {places.map(place => (
+          <MenuItem key={place} value={place}>
             {place}
           </MenuItem>
         ))}
