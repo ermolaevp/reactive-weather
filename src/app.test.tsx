@@ -26,7 +26,9 @@ describe('app', () => {
     const timelineEl = getByTestId('timeline')
     const buttons = getAllByRole(timelineEl, 'button')
     fireEvent.click(buttons[3])
-    assert.equal('?date=2014-08-11', history.location.search)
+
+    const el1 = waitForElement(() => getByText('21.8'))
+    assert.exists(el1)
   })
   it('renders not found page', () => {
     const { getByText } = renderWithRouter(<Route component={App} path="/" />, {
