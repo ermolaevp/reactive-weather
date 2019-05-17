@@ -1,7 +1,7 @@
 # Reactive Weather
 
 ![Build status](https://travis-ci.com/ermolaevp/reactive-weather.svg?branch=master)
-[![Coverage Status](https://coveralls.io/repos/github/ermolaevp/reactive-weather/badge.svg?branch=master)](https://coveralls.io/github/ermolaevp/my-contacts-client?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/ermolaevp/reactive-weather/badge.svg?branch=master)](https://coveralls.io/github/ermolaevp/reactive-weather?branch=master)
 
 ## Requirements
 
