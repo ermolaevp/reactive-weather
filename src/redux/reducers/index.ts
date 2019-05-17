@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux'
-import users from './users'
+import forecast from './forecast'
+import places from './places'
 
 const reducers = combineReducers({
-  users,
+  forecast,
+  places,
 })
 
 export default reducers

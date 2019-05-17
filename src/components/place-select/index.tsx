@@ -8,21 +8,30 @@ import {
 } from '@material-ui/core'
 import { useItemSelect } from '../../hooks/use-item-select'
 import styles from './styles'
+import { placesFetchAction } from '../../redux/reducers/places/actions'
+import { PlacesStateType } from '../../redux/reducers/places'
+import { createStructuredSelector } from 'reselect'
+import { placesSelector } from '../../redux/reducers/places/selectors'
+import { compose } from '../../utils/compose'
+import { connect } from 'react-redux'
 
 interface IProps {
   classes: any
+  places: PlacesStateType
+  placesFetch: typeof placesFetchAction
 }
 
-const Component = ({ classes }: IProps) => {
-  const [places, selectedPlace, handleSelectPlace] = useItemSelect(
-    'city',
-    '/api/places',
-  )
+const Component = ({ classes, places, placesFetch }: IProps) => {
+  React.useEffect(() => {
+    placesFetch()
+  }, [placesFetch])
+  const defaultPlace = places.findIndex(p => p === 'Amsterdam')
+  const [selectedPlace, handleSelectPlace] = useItemSelect()
   return (
     <FormControl className={classes.root}>
       <InputLabel htmlFor="places-select">City</InputLabel>
       <Select
-        value={selectedPlace || -1}
+        value={selectedPlace === -1 ? defaultPlace : selectedPlace}
         onChange={handleSelectPlace}
         fullWidth={true}
         inputProps={{
@@ -30,8 +39,8 @@ const Component = ({ classes }: IProps) => {
           id: 'places-select',
         }}
       >
-        {places.map(place => (
-          <MenuItem key={place} value={place}>
+        {places.map((place: string, index: number) => (
+          <MenuItem key={index} value={index}>
             {place}
           </MenuItem>
         ))}
@@ -40,4 +49,18 @@ const Component = ({ classes }: IProps) => {
   )
 }
 
-export const PlaceSelect = withStyles(styles)(Component)
+const selectors = createStructuredSelector({
+  places: placesSelector,
+})
+
+const mapDispatch = {
+  placesFetch: placesFetchAction,
+}
+
+export const PlaceSelect = compose(
+  connect(
+    selectors,
+    mapDispatch,
+  ),
+  withStyles(styles),
+)(Component)

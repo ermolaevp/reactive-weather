@@ -17,14 +17,19 @@ const Component = ({ classes }: IProps) => {
     setDate(new Date(day))
   }
   return (
-    <Grid className={classes.root} container={true} wrap="nowrap">
+    <Grid
+      className={classes.root}
+      container={true}
+      wrap="nowrap"
+      data-testid="timeline"
+    >
       {timeline.map(timestamp => {
         const day = new Date(timestamp).toDateString()
         return (
           <TimelineDay
             key={timestamp}
             date={new Date(timestamp)}
-            active={Boolean(date && date.toDateString() === day)}
+            active={date && date.toDateString() === day}
             onClick={handleDayClick}
           />
         )

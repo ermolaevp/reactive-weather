@@ -11,6 +11,8 @@ export const dependencies = {
   apiClient,
 }
 
+export type DependenciesType = typeof dependencies
+
 export default function configureStore() {
   const epicMiddleware = createEpicMiddleware({ dependencies })
 

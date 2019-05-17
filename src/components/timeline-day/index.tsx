@@ -11,11 +11,15 @@ import {
 interface IProps {
   classes: any
   date: Date
-  active: boolean
+  active?: boolean
   onClick: (e: any) => void
 }
 
 const Component = ({ classes, date, active, onClick }: IProps) => {
+  const isActive =
+    typeof active === 'undefined'
+      ? date.toDateString() === 'Fri Aug 08 2014'
+      : active
   const timestamp = date.getTime()
   return (
     <Grid
@@ -24,6 +28,7 @@ const Component = ({ classes, date, active, onClick }: IProps) => {
       className={classes.root}
       data-timestamp={timestamp}
       onClick={onClick}
+      role="button"
     >
       <Card>
         <CardContent>
@@ -31,14 +36,14 @@ const Component = ({ classes, date, active, onClick }: IProps) => {
             align="center"
             variant="h4"
             paragraph={true}
-            color={active ? 'secondary' : 'default'}
+            color={isActive ? 'secondary' : 'default'}
           >
             {date.getDate()}
           </Typography>
           <Typography
             align="center"
             variant="h6"
-            color={active ? 'secondary' : 'default'}
+            color={isActive ? 'secondary' : 'default'}
           >
             {date.toDateString()}
           </Typography>

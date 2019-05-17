@@ -5,7 +5,7 @@ import {
   fireEvent,
   cleanup,
   waitForElement,
-  prettyDOM,
+  getAllByRole,
 } from 'react-testing-library'
 import App from './app'
 import { assert } from 'chai'
@@ -13,29 +13,26 @@ import { assert } from 'chai'
 afterEach(cleanup)
 
 describe('app', () => {
-  it('renders home page', () => {
-    const { history } = renderWithRouter(
-      <Route component={App} path="/" exact={true} />,
+  it('renders weather page', () => {
+    const { history, getByText, getByTestId } = renderWithRouter(
+      <Route component={App} path="/" />,
       {
         route: '/',
       },
     )
+    const el = waitForElement(() => getByText('24.2'))
+    assert.exists(el)
+
+    const timelineEl = getByTestId('timeline')
+    const buttons = getAllByRole(timelineEl, 'button')
+    fireEvent.click(buttons[3])
+    assert.equal('?date=2014-08-11', history.location.search)
   })
   it('renders not found page', () => {
-    const { history, getByText } = renderWithRouter(
-      <Route component={App} path="/" />,
-      {
-        route: '/not-found',
-      },
-    )
-    const el = getByText('We can found nothing :(')
-    assert.exists(el)
-  })
-  it('renders weather', () => {
     const { getByText } = renderWithRouter(<Route component={App} path="/" />, {
-      route: '/',
+      route: '/not-found',
     })
-    const el = waitForElement(() => getByText('24.2'))
+    const el = getByText('We can found nothing :(')
     assert.exists(el)
   })
 })
