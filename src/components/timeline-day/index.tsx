@@ -20,14 +20,16 @@ const Component = ({ classes, date, active, onClick }: IProps) => {
     typeof active === 'undefined'
       ? date.toDateString() === 'Fri Aug 08 2014'
       : active
-  const timestamp = date.getTime()
+  const dateString = date.getDate()
+  const handleClick = () => {
+    onClick(date)
+  }
   return (
     <Grid
-      key={timestamp}
+      key={dateString}
       item={true}
       className={classes.root}
-      data-timestamp={timestamp}
-      onClick={onClick}
+      onClick={handleClick}
       role="button"
     >
       <Card>
@@ -38,7 +40,7 @@ const Component = ({ classes, date, active, onClick }: IProps) => {
             paragraph={true}
             color={isActive ? 'secondary' : 'default'}
           >
-            {date.getDate()}
+            {dateString}
           </Typography>
           <Typography
             align="center"

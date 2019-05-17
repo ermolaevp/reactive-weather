@@ -12,10 +12,6 @@ interface IProps {
 const Component = ({ classes }: IProps) => {
   const [date, setDate] = useQueryParam('date', DateParam)
   const timeline = range(1407441600000, 1407787200000, 60 * 60 * 24 * 1000)
-  const handleDayClick = (e: any) => {
-    const day = +e.currentTarget.dataset.timestamp
-    setDate(new Date(day))
-  }
   return (
     <Grid
       className={classes.root}
@@ -30,7 +26,7 @@ const Component = ({ classes }: IProps) => {
             key={timestamp}
             date={new Date(timestamp)}
             active={date && date.toDateString() === day}
-            onClick={handleDayClick}
+            onClick={setDate}
           />
         )
       })}
