@@ -3,6 +3,8 @@ node_js:
   - 12.1
 before_deploy:
   - yarn build
+after_deploy:
+  - yarn coverage
 deploy:
   provider: pages
   local-dir: build
