@@ -21,7 +21,7 @@
     "chai": "^4.2.0",
     "coveralls": "^3.0.3",
     "immutable": "^4.0.0-rc.12",
-    "lodash": "^4.17.13",
+    "lodash": "^4.17.21",
     "react": "16.9.0-alpha.0",
     "react-dom": "16.9.0-alpha.0",
     "react-redux": "^7.0.3",
